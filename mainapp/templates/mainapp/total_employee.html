@@ -1,0 +1,372 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQRAA Hospital - Alumni Staff</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background-color: #fff;
+            padding: 15px 0;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: #000;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .logo-sub {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .count {
+            background-color: #f0f0f0;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title h1 {
+            font-size: 32px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+        }
+        
+        .filter-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .country-select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+        
+        .filter-btn {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .filter-btn:hover {
+            background-color: #333;
+        }
+        
+        /* Employee Grid */
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .employee-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .employee-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #999;
+        }
+        
+        .employee-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .employee-info {
+            margin-bottom: 15px;
+        }
+        
+        .info-row {
+            margin-bottom: 8px;
+            display: flex;
+        }
+        
+        .info-label {
+            color: #666;
+            width: 80px;
+            font-weight: bold;
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        .employee-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .country {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .status {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .join-date {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-icon {
+            font-size: 50px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .empty-text {
+            color: #666;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .filter-form {
+                flex-direction: column;
+            }
+            
+            .search-input, .country-select {
+                min-width: 100%;
+            }
+            
+            .employee-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">IQRAA HOSPITAL</div>
+                        <div class="logo-sub">Alumni Staff Directory</div>
+                    </div>
+                </div>
+                <div class="count">
+                    <i class="fas fa-users"></i> {{ total_employee|length }} Employees
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>ALUMINI STAFF LIST</h1>
+            <p>Former employees of Iqraa Hospital. Search and find alumni staff members.</p>
+        </div>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <form method="get" class="filter-form">
+                <input type="text" name="search" class="search-input" placeholder="Search by name, email or phone" value="{{ request.GET.search }}">
+                
+                <select name="country" class="country-select">
+                    <option value="">All Countries</option>
+                    {% for c in countries %}
+                        <option value="{{ c }}" {% if request.GET.country == c %}selected{% endif %}>
+                            {{ c }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="filter-btn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </form>
+        </div>
+        
+        <!-- Employee Grid -->
+        <div class="employee-grid">
+            {% for employee in total_employee %}
+                <a href="{% url 'employee_detail' employee.id %}" class="employee-card">
+                    <div class="employee-name">{{ employee.full_name }}</div>
+                    
+                    <div class="employee-info">
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value">{{ employee.email }}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Phone:</div>
+                            <div class="info-value">{{ employee.phone_number }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="employee-footer">
+                        <div>
+                            <span class="badge country">{{ employee.country }}</span>
+                            {% if employee.conform_register %}
+                                <span class="badge status">Verified</span>
+                            {% else %}
+                                <span class="badge status-pending">Pending</span>
+                            {% endif %}
+                        </div>
+                        <div class="join-date">
+                            Joined {{ employee.created_at|date:"M Y" }}
+                        </div>
+                    </div>
+                </a>
+            {% empty %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-user-times"></i>
+                    </div>
+                    <h3>No employees found</h3>
+                    <p class="empty-text">Try adjusting your search or filter criteria</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2023 Iqraa Hospital Alumni Directory. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

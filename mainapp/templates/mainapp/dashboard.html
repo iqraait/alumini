@@ -1,0 +1,321 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iqraa Alumni Registration</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+    <!-- Your Custom CSS -->
+    <link rel="stylesheet" href="{% static 'mainapp/css/alumini.css' %}">
+    <link rel="stylesheet" href="{% static 'mainapp/css/select2-custom.css' %}">
+</head>
+<body>
+<!-- Premium Header with Banner -->
+<div class="header">
+    <div class="header-banner">
+        <img src="{% static 'mainapp/images/logo.jpeg' %}" 
+             alt="Iqraa Institution" 
+             class="banner-image">
+        <div class="header-overlay">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Iqraa Alumni Registration</h1>
+                    <p>Join our alumni network and stay in touch.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Form -->
+        <div class="form-container">
+            <form method="post" id="registrationForm" novalidate>
+                {% csrf_token %}
+
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-user"></i></div>
+                        <div class="section-title">Personal Information</div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">Full Name</label>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div class="error-message show">{{ form.full_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Iqraa Number</label>
+                            {{ form.iqraa_no }}
+                            {% if form.iqraa_no.errors %}
+                                <div class="error-message show">{{ form.iqraa_no.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            {{ form.phone_number }}
+                            {% if form.phone_number.errors %}
+                                <div class="error-message show">{{ form.phone_number.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required">
+                                WhatsApp Number <i class="fab fa-whatsapp" style="color:#25D366;"></i>
+                            </label>
+                            {{ form.whatsapp_number }}
+                            {% if form.whatsapp_number.errors %}
+                                <div class="error-message show">{{ form.whatsapp_number.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required">Email Address</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="error-message show">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="form-label required">Indian Address</label>
+                        {{ form.indian_address }}
+                        {% if form.indian_address.errors %}
+                            <div class="error-message show">{{ form.indian_address.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Family Details Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-users"></i></div>
+                        <div class="section-title">Family Details</div>
+                    </div>
+
+                    <!-- Father's Card -->
+                    <div class="family-card">
+                        <h4><i class="fas fa-male"></i> Father's Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Father's Name</label>
+                                {{ form.father_name }}
+                                {% if form.father_name.errors %}
+                                    <div class="error-message show">{{ form.father_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Father's Iqraa Number</label>
+                                {{ form.father_iqraa_num }}
+                                {% if form.father_iqraa_num.errors %}
+                                    <div class="error-message show">{{ form.father_iqraa_num.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group conditional-address father-address-group">
+                            <label class="form-label">Father's Address <span class="required-badge">Required if no Iqraa number</span></label>
+                            {{ form.father_address }}
+                            {% if form.father_address.errors %}
+                                <div class="error-message show">{{ form.father_address.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Mother's Card -->
+                    <div class="family-card">
+                        <h4><i class="fas fa-female"></i> Mother's Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Mother's Name</label>
+                                {{ form.mother_name }}
+                                {% if form.mother_name.errors %}
+                                    <div class="error-message show">{{ form.mother_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Mother's Iqraa Number</label>
+                                {{ form.mother_iqraa_num }}
+                                {% if form.mother_iqraa_num.errors %}
+                                    <div class="error-message show">{{ form.mother_iqraa_num.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group conditional-address mother-address-group">
+                            <label class="form-label">Mother's Address <span class="required-badge">Required if no Iqraa number</span></label>
+                            {{ form.mother_address }}
+                            {% if form.mother_address.errors %}
+                                <div class="error-message show">{{ form.mother_address.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Spouse's Card -->
+                    <div class="family-card">
+                        <h4><i class="fas fa-heart"></i> Spouse Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Spouse Name</label>
+                                {{ form.spouse_name }}
+                                {% if form.spouse_name.errors %}
+                                    <div class="error-message show">{{ form.spouse_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Spouse Iqraa Number</label>
+                                {{ form.spouse_iqraa_num }}
+                                {% if form.spouse_iqraa_num.errors %}
+                                    <div class="error-message show">{{ form.spouse_iqraa_num.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group conditional-address spouse-address-group">
+                            <label class="form-label">Spouse Address <span class="required-badge">Required if spouse has no Iqraa number</span></label>
+                            {{ form.spouse_address }}
+                            {% if form.spouse_address.errors %}
+                                <div class="error-message show">{{ form.spouse_address.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Children Section -->
+                    <div class="family-card">
+                        <h4><i class="fas fa-child"></i> Children Information</h4>
+                        {{ form.children }}
+                        <div id="children-container"></div>
+                        <button type="button" class="btn-add-child" id="addChildBtn">
+                            <i class="fas fa-plus-circle"></i> Add Another Child
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Iqraa Tenure Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="section-title">Iqraa Tenure</div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">From Date</label>
+                            {{ form.tenure_from }}
+                            {% if form.tenure_from.errors %}
+                                <div class="error-message show">{{ form.tenure_from.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">To Date</label>
+                            {{ form.tenure_to }}
+                            {% if form.tenure_to.errors %}
+                                <div class="error-message show">{{ form.tenure_to.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Designation</label>
+                            {{ form.iqraa_designation }}
+                            {% if form.iqraa_designation.errors %}
+                                <div class="error-message show">{{ form.iqraa_designation.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Searchable Department -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Department 
+                                <span class="search-badge">
+                                    <i class="fas fa-search"></i> Search
+                                </span>
+                            </label>
+                            {{ form.iqraa_department }}
+                            {% if form.iqraa_department.errors %}
+                                <div class="error-message show">{{ form.iqraa_department.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="form-label">Memorable Experience at Iqraa</label>
+                        {{ form.memorable_experience }}
+                        {% if form.memorable_experience.errors %}
+                            <div class="error-message show">{{ form.memorable_experience.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Current Status Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="section-title">Current Status</div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">Country</label>
+                            {{ form.country }}
+                            {% if form.country.errors %}
+                                <div class="error-message show">{{ form.country.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">City</label>
+                            {{ form.current_city }}
+                            {% if form.current_city.errors %}
+                                <div class="error-message show">{{ form.current_city.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">Professional Field</label>
+                            {{ form.professional_field }}
+                            {% if form.professional_field.errors %}
+                                <div class="error-message show">{{ form.professional_field.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">Alumni Activities Interest</label>
+                            {{ form.alumni_activities_interest }}
+                            {% if form.alumni_activities_interest.errors %}
+                                <div class="error-message show">{{ form.alumni_activities_interest.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="submit-section">
+                    <button type="submit" class="submit-button" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> Submit Registration
+                    </button>
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i> Registration submitted successfully!
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- jQuery and Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <!-- Your Custom JavaScript -->
+    <script src="{% static 'mainapp/js/alumni.js' %}"></script>
+    <script src="{% static 'mainapp/js/conditional-address.js' %}"></script>
+    <script src="{% static 'mainapp/js/children-management.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAE Alumni</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'mainapp/css/kuwait.css' %}">
+</head>
+<body>
+    <header>
+        <h1>UAE Alumni Directory</h1>
+        <p>Iqraa Hospital Alumni in Kuwait</p>
+    </header>
+
+    <div class="container">
+        <!-- Search -->
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchAlumni()">
+        </div>
+
+        <!-- Alumni List -->
+        <div id="alumniList">
+            {% for kuwaiti in uae %}
+            <div class="alumni-card" data-name="{{ kuwaiti.full_name|lower }}">
+                <div class="card-header">
+                    <span class="name">{{ kuwaiti.full_name }}</span>
+                    
+                    <div class="status">
+                        {% if kuwaiti.conform_register %}
+                            <span class="status-icon approved">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        {% else %}
+                            <form method="post" action="{% url 'confirm' kuwaiti.pk %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="approve-btn">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                            </form>
+                            <span class="status-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Basic Info -->
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value">{{ kuwaiti.email }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value">{{ kuwaiti.phone_number }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Profession</div>
+                        <div class="detail-value">{{ kuwaiti.professional_field|default:"—" }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">City</div>
+                        <div class="detail-value">{{ kuwaiti.current_city|default:"—" }}</div>
+                    </div>
+                </div>
+
+                <!-- Toggle More Info -->
+                <button class="section-toggle" onclick="toggleSection(this)">
+                    <i class="fas fa-chevron-down"></i> View More Details
+                </button>
+                
+                <div class="section-content">
+                    <div class="detail-item">
+                        <div class="detail-label">Father's Name</div>
+                        <div class="detail-value">{{ kuwaiti.father_name|default:"—" }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Mother's Name</div>
+                        <div class="detail-value">{{ kuwaiti.mother_name|default:"—" }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Iqraa Tenure</div>
+                        <div class="detail-value">{{ kuwaiti.tenure_from|date:"M Y" }} - {{ kuwaiti.tenure_to|date:"M Y" }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Department</div>
+                        <div class="detail-value">{{ kuwaiti.iqraa_department.name|default:"—" }}</div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-user-slash"></i>
+                <h3>No alumni found</h3>
+                <p>Check back later</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(btn) {
+            btn.classList.toggle('active');
+            const content = btn.nextElementSibling;
+            content.classList.toggle('show');
+        }
+
+        function searchAlumni() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.alumni-card');
+            
+            cards.forEach(card => {
+                const name = card.dataset.name || '';
+                if (name.includes(search)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

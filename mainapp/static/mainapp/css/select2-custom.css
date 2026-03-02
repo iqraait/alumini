@@ -1,0 +1,43 @@
+/* Select2 Customization for Navy/Teal Theme */
+.select2-container--default .select2-selection--single {
+    height: 45px;
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    padding: 8px 12px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 25px;
+    color: #0f172a;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 41px;
+    right: 10px;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #0d9488 !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #99f6e4;
+}
+
+.select2-dropdown {
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 6px rgba(15, 23, 42, 0.05);
+}
+
+.select2-search__field {
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+    padding: 6px !important;
+}
+
+.select2-search__field:focus {
+    border-color: #0d9488 !important;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}

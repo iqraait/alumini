@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Verification | Saudi Alumni</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f7fa;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-icon {
+            width: 44px;
+            height: 44px;
+            background: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .header-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .header-text p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* Stats */
+        .stats-bar {
+            max-width: 800px;
+            margin: 16px auto 0;
+            padding: 0 20px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .stat {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .stat span {
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        /* Search */
+        .search-box {
+            max-width: 800px;
+            margin: 16px auto 0;
+            padding: 0 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') no-repeat 16px center;
+            background-size: 16px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Card Header */
+        .card-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .alumni-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alumni-avatar {
+            width: 40px;
+            height: 40px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .alumni-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #0f172a;
+        }
+
+        .alumni-meta {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .status-icon.approved {
+            background: #10b981;
+        }
+
+        .status-icon.pending {
+            background: #f59e0b;
+        }
+
+        .status-icon.unverified {
+            background: #ef4444;
+        }
+
+        .approve-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .approve-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Quick Info */
+        .quick-info {
+            padding: 16px 20px;
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: #475569;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
+
+        .quick-info i {
+            color: #94a3b8;
+            width: 16px;
+            margin-right: 6px;
+        }
+
+        /* Accordion */
+        .accordion-item {
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 14px 20px;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .accordion-header i {
+            color: #2563eb;
+            font-size: 14px;
+        }
+
+        .accordion-header .arrow {
+            margin-left: auto;
+            transition: transform 0.2s;
+            color: #94a3b8;
+        }
+
+        .accordion-item.active .accordion-header .arrow {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 0 20px 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: grid;
+        }
+
+        .info-item {
+            font-size: 13px;
+        }
+
+        .info-label {
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .status-badge {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .quick-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .accordion-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <div class="header-text">
+                <h1>HR Verification Dashboard</h1>
+                <p>Saudi Arabia Alumni • Pending Approvals</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat">Pending: <span>{{ hr_approve|length }}</span></div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search by name, email, or phone..." onkeyup="searchAlumni()">
+    </div>
+
+    <div class="container" id="alumniContainer">
+        {% for a in hr_approve %}
+        <div class="card" data-search="{{ a.full_name|lower }} {{ a.email|lower }} {{ a.phone_number }}">
+            <div class="card-header">
+                <div class="alumni-info">
+                    <div class="alumni-avatar">{{ a.full_name|slice:":1" }}</div>
+                    <div>
+                        <div class="alumni-name">{{ a.full_name }}</div>
+                        <div class="alumni-meta">ID: {{ a.iqraa_no|default:"Not assigned" }}</div>
+                    </div>
+                </div>
+
+                <div class="status-badge">
+                    <form method="post" action="{% url 'hr_approval' a.pk %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="approve-btn">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                    </form>
+                    <div class="status-icon unverified">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-info">
+                <span><i class="fas fa-phone"></i> {{ a.phone_number }}</span>
+                <span><i class="fas fa-envelope"></i> {{ a.email|truncatechars:25 }}</span>
+                <span><i class="fas fa-globe"></i> {{ a.get_country_display }}</span>
+            </div>
+
+            <!-- Personal Details -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-user"></i>
+                    Personal Details
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="info-item">
+                        <div class="info-label">Full Name</div>
+                        <div class="info-value">{{ a.full_name }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Country</div>
+                        <div class="info-value">{{ a.get_country_display }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Phone</div>
+                        <div class="info-value">{{ a.phone_number }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value">{{ a.email }}</div>
+                    </div>
+                    <div class="info-item full-width">
+                        <div class="info-label">Indian Address</div>
+                        <div class="info-value">{{ a.indian_address|default:"—" }}</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Iqraa Association -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-building"></i>
+                    Iqraa Association
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="info-item">
+                        <div class="info-label">Tenure</div>
+                        <div class="info-value">{{ a.tenure_from|date:"M Y" }} - {{ a.tenure_to|date:"M Y" }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Designation</div>
+                        <div class="info-value">{{ a.iqraa_designation|default:"—" }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Department</div>
+                        <div class="info-value">{{ a.iqraa_department.name|default:"—" }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Campus</div>
+                        <div class="info-value">{{ a.iqraa_campus|default:"—" }}</div>
+                    </div>
+                </div>
+            </div>
+
+        
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h3>No pending approvals</h3>
+            <p>All alumni have been verified</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Toggle accordion sections
+        function toggleAccordion(button) {
+            const item = button.closest('.accordion-item');
+            item.classList.toggle('active');
+        }
+
+        // Search functionality
+        function searchAlumni() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const searchData = card.dataset.search || '';
+                if (searchData.includes(search)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Close all accordions on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.accordion-item');
+            items.forEach(item => {
+                item.classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

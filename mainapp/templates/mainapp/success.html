@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 16px;
+        }
+        
+        .card {
+            background: white;
+            padding: 40px 24px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 340px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .check {
+            background: #0d9488;
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+        }
+        
+        h4 {
+            color: #0f172a;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .msg {
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        
+        button {
+            background: none;
+            border: 1px solid #cbd5e1;
+            padding: 10px 28px;
+            border-radius: 30px;
+            color: #334155;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="check">✓</div>
+        <h4>Thank you!</h4>
+        <div class="msg">Your registration was successful.</div>
+        <button onclick="window.location.href='/'">Close</button>
+    </div>
+</body>
+</html>

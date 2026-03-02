@@ -1,0 +1,373 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ employee.full_name }} | IQRAA Hospital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-1: #fafafa;
+            --bg-2: #f5f5f5;
+            --card: #ffffff;
+            --text-1: #111111;
+            --text-2: #666666;
+            --border: #e5e5e5;
+            --accent: #000000;
+            --cyan: #06b6d4;      /* CYAN for values */
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-1);
+            color: var(--text-1);
+            padding: 24px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--card);
+            padding: 32px 28px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-1);
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-1);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            margin: 0 auto;
+            display: inline-block;
+        }
+        
+        .back:hover {
+            background: var(--accent);
+            color: var(--card);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+        
+        /* Profile - Compact */
+        .profile {
+            padding: 32px 28px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .avatar {
+            width: 64px;
+            height: 64px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card);
+            font-size: 24px;
+        }
+        
+        .name {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-1);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+        
+        .role {
+            font-size: 16px;
+            color: var(--cyan);     /* CYAN role */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Ultra Compact Sections */
+        .section {
+            padding: 24px 28px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--cyan);    /* CYAN underline */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--cyan);    /* CYAN icons */
+        }
+        
+        /* TIGHT Info Rows */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.15s ease;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-row:hover {
+            background: var(--bg-2);
+            margin: 0 -4px;
+            padding-left: 4px;
+            padding-right: 4px;
+            border-radius: 8px;
+        }
+        
+        .label {
+            color: var(--text-2);
+            font-weight: 600;
+            min-width: 120px;
+            font-size: 14px;
+        }
+        
+        .value {
+            color: rgb(0, 7, 0);    /* CYAN VALUES */
+            font-weight: 700;
+            font-size: 15px;
+            text-align: right;
+            flex: 1;
+        }
+        
+        /* Clean Badges */
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .confirmed {
+            background: var(--card);
+            color: var(--cyan);     /* CYAN confirmed */
+            border: 1px solid var(--cyan);
+        }
+        
+        .pending {
+            background: #fefefe;
+            color: var(--text-2);
+            border: 1px solid var(--text-2);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 24px 28px;
+            color: var(--text-2);
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-2);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 16px; }
+            .container { border-radius: 16px; margin: 0; }
+            .profile, .section { padding-left: 24px; padding-right: 24px; }
+            .info-row { 
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                padding: 14px 0;
+            }
+            .value { text-align: left; }
+            .name { font-size: 24px; }
+        }
+        
+        /* Print */
+        @media print {
+            body { padding: 0; background: white; }
+            .container { box-shadow: none; max-width: none; border-radius: 0; }
+            .back { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">IQRAA HOSPITAL</div>
+            <a href="{% url 'total_employee' %}" class="back">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+        
+        <div class="profile">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="name">{{ employee.full_name }}</div>
+            <div class="role">{{ employee.designation }}</div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-id-card"></i> Personal
+            </div>
+            <div class="info-row">
+                <span class="label">IQRAA No</span>
+                <span class="value">{{ employee.iqraa_no|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Working Place</span>
+                <span class="value">{{ employee.working_place|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Country</span>
+                <span class="value">{{ employee.country|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Phone</span>
+                <span class="value">{{ employee.phone_number|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Email</span>
+                <span class="value">{{ employee.email|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Status</span>
+                <span class="value">
+                    {% if employee.conform_register %}
+                        <span class="badge confirmed">Verified</span>
+                    {% else %}
+                        <span class="badge pending">Pending</span>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-users"></i> Family
+            </div>
+            <div class="info-row">
+                <span class="label">Father</span>
+                <span class="value">{{ employee.father_name|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Mother</span>
+                <span class="value">{{ employee.mother_name|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Spouse</span>
+                <span class="value">{{ employee.spouse_name|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Children</span>
+                <span class="value">{{ employee.children|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Grandparents</span>
+                <span class="value">{{ employee.grandparents|default:"—" }}</span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-heart"></i> IQRAA
+            </div>
+            <div class="info-row">
+                <span class="label">Department</span>
+                <span class="value">{{ employee.iqraa_department|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Designation</span>
+                <span class="value">{{ employee.iqraa_designation|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Campus</span>
+                <span class="value">{{ employee.iqraa_campus|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Tenure</span>
+                <span class="value">{{ employee.tenure_from|default:"—" }} – {{ employee.tenure_to|default:"—" }}</span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-briefcase"></i> Status
+            </div>
+            <div class="info-row">
+                <span class="label">City</span>
+                <span class="value">{{ employee.current_city|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Field</span>
+                <span class="value">{{ employee.professional_field|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Activities</span>
+                <span class="value">{{ employee.alumni_activities_interest|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">How we met</span>
+                <span class="value">{{ employee.hear_about_us|default:"—" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Memory</span>
+                <span class="value">{{ employee.memorable_experience|default:"—" }}</span>
+            </div>
+        </div>
+        
+        <div class="footer">© 2025 IQRAA Hospital Alumni</div>
+    </div>
+</body>
+</html>
