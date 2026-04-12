@@ -4,14 +4,13 @@ __pycache__/
 
 # Django
 db.sqlite3
-media/
-staticfiles/
+/staticfiles/
 
 # Env
 .env
 
-# VS Code
+# IDE
 .vscode/
 
-# Mac/Linux
-.DS_Store
+# Others
+*.xlsx
