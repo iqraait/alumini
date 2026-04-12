@@ -28,14 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3j5qgn^k@cgitc&8o0o#et+*%$_rrja_osp%jm^m1t7eo%e8=u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = [
+
     'localhost',                # For local development
     '127.0.0.1',                 # For local development
     '0.0.0.0',
     'globalalumini.iqraahospital.in',          # for aws domain
+
 ]
 
 
@@ -76,7 +78,9 @@ MIDDLEWARE = [
 
 ]
 
+
 ROOT_URLCONF = 'myproject.urls'
+
 
 TEMPLATES = [
     {
@@ -93,8 +97,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'myproject.wsgi.application'
 
+WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
 # Database

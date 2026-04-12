@@ -1,5 +1,5 @@
 
-
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -26,6 +26,17 @@ class Department(models.Model):
 class AlumniRegistration(models.Model):
     # ========== CHOICE CONSTANTS ==========
     # Country Choices
+
+    MALE = 'M'
+    FEMALE = 'F'
+    OTHER = 'O'
+
+    GENDER_CHOICES = [
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (OTHER, 'Other'),
+    ]
+
     SAUDI_ARABIA = 'Saudi Arabia'
     UAE = 'United Arab Emirates'
     KUWAIT = 'Kuwait'
@@ -67,6 +78,24 @@ class AlumniRegistration(models.Model):
     
     # ========== PERSONAL INFORMATION ==========
     full_name = models.CharField(max_length=200, verbose_name="Full Name")
+
+    gender = models.CharField(
+        max_length=1,
+        choices=GENDER_CHOICES,
+        default=OTHER,
+        blank=False,
+        null=False,
+        verbose_name="Gender"
+    )
+    age = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(1, message="Age must be at least 1"), 
+                   MaxValueValidator(150, message="Age cannot exceed 150")],
+        verbose_name="Age",
+        help_text="Age in years"
+    )
+
     country = models.CharField(
         max_length=100,
         choices=COUNTRY_CHOICES,
@@ -94,6 +123,15 @@ class AlumniRegistration(models.Model):
     
     # ========== FATHER'S INFORMATION ==========
     father_name = models.CharField(max_length=200, verbose_name="Father's Name")
+    father_name = models.CharField(max_length=200, verbose_name="Father's Name")
+    father_age = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        default=None,
+        validators=[MinValueValidator(1, message="Age must be at least 1"), MaxValueValidator(150, message="Age cannot exceed 150")],
+        verbose_name="Father's Age",
+        help_text="Age in years"
+    )
     father_iqraa_num = models.CharField(
         max_length=50,
         blank=True,
@@ -106,9 +144,26 @@ class AlumniRegistration(models.Model):
         help_text="Required if Father's Iqraa number is not provided",
         verbose_name="Father's Address"
     )
+
+    father_pincode = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(r'^\d{6}$', message="Pincode must be exactly 6 digits.")],
+        verbose_name="Father's Pincode"
+    )
+    
     
     # ========== MOTHER'S INFORMATION ==========
     mother_name = models.CharField(max_length=200, verbose_name="Mother's Name")
+    mother_age = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        default=None,
+        validators=[MinValueValidator(1, message="Age must be at least 1"), MaxValueValidator(150, message="Age cannot exceed 150")],
+        verbose_name="Mother's Age",
+        help_text="Age in years"
+    )
     mother_iqraa_num = models.CharField(
         max_length=50,
         blank=True,
@@ -121,6 +176,15 @@ class AlumniRegistration(models.Model):
         help_text="Required if Mother's Iqraa number is not provided",
         verbose_name="Mother's Address"
     )
+
+    mother_pincode = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(r'^\d{6}$', message="Pincode must be exactly 6 digits.")],
+        verbose_name="Mother's Pincode"
+    )
+    
     
     # ========== SPOUSE INFORMATION ==========
     spouse_name = models.CharField(
@@ -128,6 +192,14 @@ class AlumniRegistration(models.Model):
         blank=True,
         null=True,
         verbose_name="Spouse Name"
+    )
+    spouse_age = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        default=None,
+        validators=[MinValueValidator(1, message="Age must be at least 1"), MaxValueValidator(150, message="Age cannot exceed 150")],
+        verbose_name="Spouse's Age",
+        help_text="Age in years"
     )
     spouse_iqraa_num = models.CharField(
         max_length=50,
@@ -195,6 +267,13 @@ class AlumniRegistration(models.Model):
         blank=True,
         null=True,
         verbose_name="How did you hear about us?"
+    )
+
+    grandparents = models.JSONField(
+        default=list,
+        blank=True,
+        verbose_name="Grandparents Details",
+        help_text="List of grandparents with details"
     )
     
     # ========== APPROVAL WORKFLOW ==========

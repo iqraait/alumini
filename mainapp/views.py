@@ -111,7 +111,7 @@ class All_Registered_Employee_list(ListView):
     model = AlumniRegistration
     template_name = "mainapp/total_employee.html"
     context_object_name = 'total_employee'
-    paginate_by = 10
+    # paginate_by = 10
 
     def get_queryset(self):
         return AlumniRegistration.objects.all().order_by("-created_at")
@@ -156,7 +156,7 @@ class HR_Verification(ListView):
     model = AlumniRegistration
     template_name = "mainapp/hr_verfication.html"
     context_object_name = "hr_approve"
-    paginate_by = 10
+    # paginate_by = 10
 
     def get_queryset(self):
         return AlumniRegistration.objects.filter(
